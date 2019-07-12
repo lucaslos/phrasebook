@@ -2,11 +2,12 @@ import css from '@emotion/css';
 import styled from '@emotion/styled';
 import Button from 'components/Button';
 import { ellipsis } from 'polished';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Card as CardProps, deleteCard, updateCard } from 'state/cardsState';
 import { hide, show } from 'style/modifiers';
 import { colorPrimary, colorSecondary } from 'style/theme';
 import rgba from 'utils/rgba';
+import useOnClickOutside from 'utils/hooks/useOnClickOutside';
 
 type Props = {
   card: CardProps;
@@ -118,9 +119,14 @@ const Card = ({ card, onClickEdit }: Props) => {
     setShowMenu(false);
   }
 
+  const menuRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(menuRef, () => {
+    setShowMenu(false);
+  });
+
   return (
     <Container
-      style={{ zIndex: showMenu ? 1000 - card.id : undefined }}
+      style={{ zIndex: showMenu ? 1000 : undefined }}
       onClick={onEdit}
     >
       <Faces
@@ -142,7 +148,7 @@ const Card = ({ card, onClickEdit }: Props) => {
           setShowMenu(!showMenu);
         }}
       />
-      <CardMenu css={showMenu && showMenuStyle}>
+      <CardMenu css={showMenu && showMenuStyle} ref={menuRef}>
         <MenuOption onClick={toggleIsArchieved}>
           <span>{!card.isArchieved ? 'Archieve' : 'Send to export'}</span>
         </MenuOption>
