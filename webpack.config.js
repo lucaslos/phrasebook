@@ -108,7 +108,7 @@ module.exports = {
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [`**/*`, `!static*`],
+      cleanOnceBeforeBuildPatterns: [`**/*`, `!static*`, '!icons-*'],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.HashedModuleIdsPlugin(),
@@ -131,11 +131,11 @@ module.exports = {
     new FaviconsWebpackPlugin({
       logo: './src/assets/logo.png',
       // favicons: {
-        appName: 'Phrasebook',
-        appDescription: 'Phrasebook App',
-        theme_color: '#f8f8f8',
-        start_url: '.',
-        manifestRelativePaths: true,
+      appName: 'Phrasebook',
+      appDescription: 'Phrasebook App',
+      theme_color: '#f8f8f8',
+      start_url: '.',
+      manifestRelativePaths: true,
       // },
       icons: {
         android: true, // Create Android homescreen icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }`
