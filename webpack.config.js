@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 const path = require('path');
 const workboxPlugin = require('workbox-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const WebappWebpackPlugin = require('webapp-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const folder = './docs';
 
@@ -89,7 +93,9 @@ module.exports = {
           name(module) {
             // get the name. E.g. node_modules/packageName/not/this/part.js
             // or node_modules/packageName
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
+            )[1];
 
             // npm package names are URL-safe, but some servers don't like @ symbols
             return `npm.${packageName.replace('@', '')}`;
@@ -102,14 +108,7 @@ module.exports = {
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [
-        `**/main*.js`,
-        `**/*style*.css`,
-        `**/*runtime*.js`,
-        `**/*vendors*.js`,
-        `**/npm*.js`,
-        `**/precache-manifest*.js`,
-      ],
+      cleanOnceBeforeBuildPatterns: [`**/*`, `!static*`],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.HashedModuleIdsPlugin(),
@@ -129,6 +128,26 @@ module.exports = {
         minifyURLs: true,
       },
     }),
+    new FaviconsWebpackPlugin({
+      logo: './src/assets/logo.png',
+      // favicons: {
+        appName: 'Phrasebook',
+        appDescription: 'Phrasebook App',
+        theme_color: '#f8f8f8',
+        start_url: '.',
+        manifestRelativePaths: true,
+      // },
+      icons: {
+        android: true, // Create Android homescreen icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }`
+        appleIcon: true, // Create Apple touch icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }`
+        appleStartup: true, // Create Apple startup images. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }`
+        coast: false, // Create Opera Coast icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }`
+        favicons: true, // Create regular favicons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }`
+        firefox: false, // Create Firefox OS icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }`
+        windows: true, // Create Windows 8 tile icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }`
+        yandex: false,
+      },
+    }),
     new webpack.DefinePlugin({
       __DEV__: false,
       __PROD__: true,
@@ -141,7 +160,9 @@ module.exports = {
       importWorkboxFrom: 'cdn',
       runtimeCaching: [
         {
-          urlPattern: new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
+          urlPattern: new RegExp(
+            '^https://fonts.(?:googleapis|gstatic).com/(.*)',
+          ),
           handler: 'CacheFirst',
           options: {
             cacheName: 'googleFonts',

@@ -6,6 +6,7 @@ import normalize from 'style/normalize';
 import { fontPrimary } from 'style/theme';
 import useGetSet from 'utils/hooks/useGetSet';
 import { appContainerStyle } from 'containers/App';
+import scrollBar from 'style/scrollBar';
 
 const debugLayoutStyle = css`
   *:not(g):not(path) {
@@ -23,7 +24,6 @@ const reset = css`
   *::before,
   *::after {
     box-sizing: border-box;
-    transform: translate3d(0, 0, 0);
     margin: 0;
     padding: 0;
 
@@ -31,16 +31,18 @@ const reset = css`
     -moz-osx-font-smoothing: grayscale;
   }
 
-  html,
-  body {
-    ${fillContainer}
-
-    font-family: ${fontPrimary}, sans-serif;
-    transform: none;
+  html, body {
+    height: 100%;
+    width: 100%;
+    font-family: ${fontPrimary};
   }
 
   #app {
     ${appContainerStyle};
+
+    * {
+      transform: translate3d(0, 0, 0);
+    }
   }
 
   a {
@@ -56,6 +58,7 @@ const reset = css`
     background: transparent;
     border: 0;
     outline: none;
+    cursor: pointer;
   }
 `;
 
@@ -75,6 +78,7 @@ const GlobalStyle = () => {
     <Global
       styles={[
         normalize,
+        scrollBar,
         getDebugLayout() && debugLayoutStyle,
         reset,
       ]}

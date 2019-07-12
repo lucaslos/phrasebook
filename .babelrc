@@ -15,9 +15,8 @@
     "production": {
   	  "presets": [
         "@babel/typescript",
-        // "@babel/env", // TODO: check the best config
   	    "@babel/preset-react",
-        "@emotion/babel-preset-css-prop" // TODO: test https://www.npmjs.com/package/babel-plugin-optimize-react
+        "@emotion/babel-preset-css-prop"
       ],
       "plugins": [
         "@babel/plugin-proposal-class-properties",

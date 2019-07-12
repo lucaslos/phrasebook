@@ -19,9 +19,9 @@ export function circle(size: number) {
  *
  * @param emSize size in em unit
  */
-export function letterSpacing(emSize: number) {
+export function letterSpacing(percentage: number) {
   return css`
-    letter-spacing: ${emSize}em;
-    margin-right: -${emSize}em;
+    letter-spacing: ${percentage / 100}em;
+    margin-right: -${percentage / 100}em;
   `;
 }

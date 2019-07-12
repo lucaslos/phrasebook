@@ -24,9 +24,11 @@ export const centerContentCollum = css`
 export const show = css`
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 `;
 
 export const hide = css`
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
 `;

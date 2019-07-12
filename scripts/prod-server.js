@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const portfinder = require('portfinder');
 const { name, version, directories } = require('../package.json');
 
 const app = express();
@@ -38,7 +39,10 @@ app.get(`/${name.replace(' ', '_')}/*`, (req, res) => {
 });
 
 
-const port = 5050;
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
+portfinder.basePort = 5050;
+
+portfinder.getPort((err, port) => {
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`Prod server listening on port ${port}`);
+  });
 });

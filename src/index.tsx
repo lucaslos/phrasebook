@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Root from 'Root';
-// import 'state';
+import 'state';
 import { version, name } from '../package.json';
 
 if (__PROD__) {

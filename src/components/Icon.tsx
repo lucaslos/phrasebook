@@ -1,14 +1,13 @@
 import iconsSet from 'data/icons.ts';
 import * as React from 'react';
-import { colors as themeColors } from 'style/theme';
+import { colorPrimary } from 'style/theme';
 import { obj } from 'typings/utils';
 
-type JsonIcon = {
-  viewBox: string;
-  paths?: obj[];
-  rects?: obj[];
-  colors?: obj[];
+export type JsonIcon = {
+  viewBox?: string;
+  paths?: (obj | string)[];
 };
+
 
 export type Icons = keyof typeof iconsSet;
 
@@ -18,10 +17,10 @@ type Icon = {
   size?: number;
 };
 
-const Icon = ({ name, color = themeColors.coral, size = 24 }: Icon) => {
-  if (!iconsSet[name]) throw new Error(`Icon ${name} do not exists`);
+const Icon = ({ name, color = colorPrimary, size = 24 }: Icon) => {
+  if (__DEV__ && !iconsSet[name]) throw new Error(`Icon ${name} do not exists`);
 
-  const { viewBox, paths, rects, colors }: JsonIcon = iconsSet[name];
+  const { viewBox, paths }: JsonIcon = iconsSet[name];
 
   return (
     <svg
@@ -34,16 +33,15 @@ const Icon = ({ name, color = themeColors.coral, size = 24 }: Icon) => {
       viewBox={viewBox}
     >
       {paths &&
-        paths.map((pathElem, i) => (
+        paths.map((attributes, i) => (
           <path
             key={i}
-            d={pathElem.d}
-            opacity={pathElem.opacity}
-            fillRule={pathElem.evenodd ? 'evenodd' : undefined}
-            clipRule={pathElem.evenodd ? 'evenodd' : undefined}
+            {...(typeof attributes === 'string'
+              ? { d: attributes }
+              : attributes
+            )}
           />
         ))}
-      {/* {rects && rects.map(rectElem => <rect />)} */}
     </svg>
   );
 };

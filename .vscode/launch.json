@@ -22,6 +22,18 @@
       "request": "launch",
       "name": "Node",
       "program": "${file}"
+    },
+    {
+      "type": "vscode-edge-devtools.debug",
+      "request": "launch",
+      "name": "Launch Microsoft Edge and open the Elements tool",
+      "file": "${workspaceFolder}/index.html"
+    },
+    {
+        "type": "vscode-edge-devtools.debug",
+        "request": "attach",
+        "name": "Attach to Microsoft Edge and open the Elements tool",
+        "url": "http://localhost:8000/"
     }
   ]
 }
