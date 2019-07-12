@@ -32,10 +32,8 @@ const ModalCard = styled.div`
   position: absolute;
   width: 100%;
   max-width: 540px;
-  max-height: 100%;
+  max-height: calc(100% - 32px * 2);
   /* margin: 32px 0; */
-  top: 32px;
-  margin-bottom: 32px;
   overflow-y: auto;
   padding: 16px;
   border-radius: 12px;
