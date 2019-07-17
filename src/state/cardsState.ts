@@ -1,5 +1,6 @@
 import { createStore } from 'hookstated';
 import { openDB, DBSchema } from 'idb';
+import { sortByFrequencyAndRemoveDuplicates } from 'utils/sortByFrequencyAndRemoveDuplicates';
 
 export type Card = {
   id: number;
@@ -15,6 +16,7 @@ export type CardOptionalId = Omit<Card, 'id'> & { id?: number };
 
 type CardsState = {
   cards: Card[];
+  mostUsedTags: string[];
 };
 
 interface MyDB extends DBSchema {
@@ -34,12 +36,15 @@ type Reducers = {
 const cardsState = createStore<CardsState, Reducers>('cards', {
   state: {
     cards: [],
+    mostUsedTags: [],
   },
   reducers: {
     addCard: (state, newCards) => ({
+      ...state,
       cards: [...state.cards, ...newCards],
     }),
     updateCard: (state, cardsToUpdate) => ({
+      ...state,
       cards: state.cards.map(card => {
         const updatedCard = cardsToUpdate.find(({ id }) => id === card.id);
 
@@ -47,6 +52,7 @@ const cardsState = createStore<CardsState, Reducers>('cards', {
       }),
     }),
     deleteCard: (state, { id }) => ({
+      ...state,
       cards: state.cards.filter(card => id !== card.id),
     }),
   },
@@ -63,9 +69,22 @@ const cardsStateDb = openDB<MyDB>('cards', 1, {
 
 export function loadCardsToState() {
   cardsStateDb.then(db => {
-    db.getAll('cards').then((cards: Card[]) =>
-      cardsState.setKey('cards', cards),
-    );
+    db.getAll('cards').then((cards: Card[]) => {
+      cardsState.setKey('cards', cards);
+
+      let suggestions: string[] = [];
+
+      cards.forEach(card => {
+        if (card.tags && card.tags.length !== 0) {
+          suggestions = suggestions.concat(card.tags);
+        }
+      });
+
+      cardsState.setKey(
+        'mostUsedTags',
+        sortByFrequencyAndRemoveDuplicates(suggestions),
+      );
+    });
   });
 }
 
@@ -174,9 +193,9 @@ export function importCards(toExport = false) {
             isArchieved: !toExport,
             isTopWord: false,
           })),
-          (ids) => {
+          ids => {
             lastImport = ids;
-          }
+          },
         );
       } else {
         alert('invalid input');

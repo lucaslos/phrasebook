@@ -90,8 +90,22 @@ const Notes = ({ tags, suggestions = [], setTags, defaultValue }: Props) => {
     setTags([...tags, tag.name]);
   }
 
+  function onDrop(e: React.DragEvent) {
+    e.preventDefault();
+
+    if (e.dataTransfer.types.includes('text/plain')) {
+      onAddition({ name: e.dataTransfer.getData('Text') });
+    }
+  }
+
+  function onDragOver(e: React.DragEvent) {
+    e.preventDefault();
+
+    e.dataTransfer.dropEffect = 'copy';
+  }
+
   return (
-    <Container>
+    <Container onDragOver={onDragOver} onDrop={onDrop}>
       <SectionHeader name="Notes" />
       <ReactTags
         tags={tags.map((tag, id) => ({ id, name: tag }))}

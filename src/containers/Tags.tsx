@@ -14,6 +14,8 @@ import { circle } from 'style/helpers';
 import { centerContent, centerContentCollum } from 'style/modifiers';
 import rgba from 'utils/rgba';
 import SectionHeader from 'components/SectionHeader';
+import { sortByFrequencyAndRemoveDuplicates } from 'utils/sortByFrequencyAndRemoveDuplicates';
+import cardsState from 'state/cardsState';
 
 type Props = {
   tags: string[];
@@ -133,15 +135,9 @@ const Container = styled.div`
   }
 `;
 
-const suggestions = [
-  'verb',
-  'noun',
-  'adjective',
-  'adverb',
-  'abstract',
-];
-
 const Tags = ({ tags, setTags }: Props) => {
+  const [suggestions] = cardsState.useStore('mostUsedTags');
+
   function onDelete(i: number) {
     setTags(tags.filter((tag, index) => index !== i));
   }
