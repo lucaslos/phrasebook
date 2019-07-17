@@ -2,12 +2,12 @@ import css from '@emotion/css';
 import styled from '@emotion/styled';
 import Button from 'components/Button';
 import { ellipsis } from 'polished';
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Card as CardProps, deleteCard, updateCard } from 'state/cardsState';
 import { hide, show } from 'style/modifiers';
 import { colorPrimary, colorSecondary } from 'style/theme';
-import rgba from 'utils/rgba';
 import useOnClickOutside from 'utils/hooks/useOnClickOutside';
+import rgba from 'utils/rgba';
 
 type Props = {
   card: CardProps;
@@ -97,13 +97,16 @@ const showMenuStyle = css`
 
 const Card = ({ card, onClickEdit }: Props) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [highlight, setHighlight] = useState(false);
 
   function toggleIsArchieved(e: React.MouseEvent) {
     e.stopPropagation();
-    updateCard([{
-      ...card,
-      isArchieved: !card.isArchieved,
-    }]);
+    updateCard([
+      {
+        ...card,
+        isArchieved: !card.isArchieved,
+      },
+    ]);
     setShowMenu(false);
   }
 
@@ -111,6 +114,11 @@ const Card = ({ card, onClickEdit }: Props) => {
     e.stopPropagation();
     deleteCard([card.id]);
     setShowMenu(false);
+  }
+
+  function toggleHighlight(e: React.MouseEvent) {
+    e.stopPropagation();
+    setHighlight(!highlight);
   }
 
   function onEdit(e: React.MouseEvent) {
@@ -126,7 +134,11 @@ const Card = ({ card, onClickEdit }: Props) => {
 
   return (
     <Container
-      style={{ zIndex: showMenu ? 1000 : undefined }}
+      style={{
+        zIndex: showMenu ? 1000 : undefined,
+        color: highlight ? colorPrimary : undefined,
+        fontWeight: highlight ? 600 : undefined,
+      }}
       onClick={onEdit}
     >
       <Faces
@@ -154,6 +166,9 @@ const Card = ({ card, onClickEdit }: Props) => {
         </MenuOption>
         <MenuOption onClick={onEdit}>
           <span>Edit</span>
+        </MenuOption>
+        <MenuOption onClick={toggleHighlight}>
+          <span>{highlight ? 'Undo hightlight' : 'Highlight'}</span>
         </MenuOption>
         <MenuOption onClick={onDelete}>
           <span>Delete</span>
