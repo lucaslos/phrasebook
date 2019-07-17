@@ -14,7 +14,11 @@ const folder = './docs';
 module.exports = {
   mode: 'production',
 
-  entry: ['./src/index.tsx'],
+  entry: {
+    main: './src/index.tsx',
+    oxfordWordList: './src/data/CCAE.json',
+    CCAEList: './src/data/oxford3000-5000.json',
+  },
 
   output: {
     path: path.join(__dirname, folder),
