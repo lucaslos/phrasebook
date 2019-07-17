@@ -38,7 +38,7 @@ const AddCardContainer = () => {
     <ContainerWrapper>
       <CardEditor
         key={editorKey}
-        initialCardProps={initialCardProps}
+        initialCardProps={editorKey === 0 ? initialCardProps : undefined}
         // noteInputDefaultValue={sentence || ''}
         onSave={saveCard}
         saveButtonLabel="Add Card"
