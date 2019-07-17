@@ -133,7 +133,15 @@ const Container = styled.div`
   }
 `;
 
-const Tags = ({ tags, suggestions = [], setTags }: Props) => {
+const suggestions = [
+  'verb',
+  'noun',
+  'adjective',
+  'adverb',
+  'abstract',
+];
+
+const Tags = ({ tags, setTags }: Props) => {
   function onDelete(i: number) {
     setTags(tags.filter((tag, index) => index !== i));
   }
@@ -151,6 +159,7 @@ const Tags = ({ tags, suggestions = [], setTags }: Props) => {
           id,
           name: suggestion,
         }))}
+        minQueryLength={1}
         onDelete={onDelete}
         placeholderText="Add tag"
         onAddition={onAddition}

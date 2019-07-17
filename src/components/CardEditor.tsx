@@ -52,7 +52,7 @@ const ccaeListWithRank = ccaeList.map((word, i) => ({
 
 const dictionaryUrls = {
   cambridgeTranslation: (query: string) =>
-    `http://dictionary.cambridge.org/us/search/english-portuguese/direct/?q=${encodeURI(
+    `http://dictionary-beta.cambridge.org/us/search/english-portuguese/direct/?q=${encodeURI(
       query,
     )}`,
   contextReverso: (query: string) =>
