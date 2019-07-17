@@ -5,7 +5,6 @@ const workboxPlugin = require('workbox-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const WebappWebpackPlugin = require('webapp-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -16,8 +15,8 @@ module.exports = {
 
   entry: {
     main: './src/index.tsx',
-    oxfordWordList: './src/data/CCAE.json',
-    CCAEList: './src/data/oxford3000-5000.json',
+    CCAEList: './src/data/CCAE.json',
+    oxfordWordList: './src/data/oxford3000-5000.json',
   },
 
   output: {
@@ -112,7 +111,7 @@ module.exports = {
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [`**/*`, `!static*`, '!icons-*'],
+      cleanOnceBeforeBuildPatterns: [`**/*`, `!static*`, '!icons*'],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.HashedModuleIdsPlugin(),
@@ -136,10 +135,11 @@ module.exports = {
       logo: './src/assets/logo.png',
       // favicons: {
       appName: 'Phrasebook',
+      prefix: 'icons/',
       appDescription: 'Phrasebook App',
       theme_color: '#f8f8f8',
       start_url: '.',
-      manifestRelativePaths: true,
+      persistentCache: false,
       // },
       icons: {
         android: true, // Create Android homescreen icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }`
@@ -158,7 +158,7 @@ module.exports = {
     }),
     new workboxPlugin.GenerateSW({
       swDest: 'sw.js',
-      exclude: ['index.html'],
+      exclude: ['index.html', 'icons'],
       clientsClaim: true,
       skipWaiting: true,
       importWorkboxFrom: 'cdn',
