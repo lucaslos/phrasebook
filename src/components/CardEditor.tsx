@@ -50,6 +50,18 @@ const ccaeListWithRank = ccaeList.map((word, i) => ({
   pos: i + 1,
 }));
 
+const tagsSuggestions = [
+  {
+    p: 'verb',
+  },
+  {
+    p: 'adjective',
+  },
+  {
+    p: 'noun',
+  },
+];
+
 const dictionaryUrls = {
   cambridgeTranslation: (query: string) =>
     `http://dictionary-beta.cambridge.org/us/search/english-portuguese/direct/?q=${encodeURI(
@@ -211,8 +223,8 @@ const CardEditor = ({
     setTags([...tags, tag]);
   }
 
-  const debouncedFront = useDebounce(fields.front.value, 1000);
-  const debouncedBack = useDebounce(fields.back.value, 1000);
+  const debouncedFront = useDebounce(fields.front.value.trim(), 1000);
+  const debouncedBack = useDebounce(fields.back.value.trim(), 1000);
 
   const oxfordListWord = useMemo(
     () =>
@@ -336,22 +348,20 @@ const CardEditor = ({
         setTags={setNotes}
       />
       <Tags tags={tags} setTags={setTags} />
-      {oxfordListWord.length > 0 && oxfordListWord && (
-        <Row
-          css={css`
-            color: #555;
-            font-size: 14px;
-            justify-content: flex-start;
-          `}
-        >
-          Suggestions:
-          {oxfordListWord.map((word, i) => (
-            <TagSuggestion key={i} onClick={() => addTag(word.p)}>
-              {word.p}
-            </TagSuggestion>
-          ))}
-        </Row>
-      )}
+      <Row
+        css={css`
+          color: #555;
+          font-size: 14px;
+          justify-content: flex-start;
+        `}
+      >
+        Suggestions:
+        {(oxfordListWord || tagsSuggestions).map((word, i) => (
+          <TagSuggestion key={i} onClick={() => addTag(word.p)}>
+            {word.p}
+          </TagSuggestion>
+        ))}
+      </Row>
       {(frontIsDuplicated.length > 0 || backIsDuplicated.length > 0) && (
         <>
           <SectionHeader name="Similar cards" />
@@ -408,9 +418,9 @@ const CardEditor = ({
           label={saveButtonLabel}
           onClick={onClickSaveAction}
           disabled={
-            !fields.back.isValid ||
-            !fields.front.isValid ||
-            !validBeforeSave(newCardProps)
+            !fields.back.isValid
+            || !fields.front.isValid
+            || !validBeforeSave(newCardProps)
           }
         />
       </BottomButtons>
