@@ -356,7 +356,7 @@ const CardEditor = ({
         `}
       >
         Suggestions:
-        {(oxfordListWord || tagsSuggestions).map((word, i) => (
+        {(oxfordListWord && oxfordListWord.length > 0 ? oxfordListWord : tagsSuggestions).map((word, i) => (
           <TagSuggestion key={i} onClick={() => addTag(word.p)}>
             {word.p}
           </TagSuggestion>
