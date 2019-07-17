@@ -74,6 +74,7 @@ const CardMenu = styled.div`
   padding: 8px 0;
   height: 0;
   overflow: hidden;
+  font-weight: 400;
   cursor: auto;
 `;
 
@@ -119,6 +120,7 @@ const Card = ({ card, onClickEdit }: Props) => {
   function toggleHighlight(e: React.MouseEvent) {
     e.stopPropagation();
     setHighlight(!highlight);
+    setShowMenu(false);
   }
 
   function onEdit(e: React.MouseEvent) {
