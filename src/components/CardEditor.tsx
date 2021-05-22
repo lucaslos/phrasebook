@@ -243,15 +243,14 @@ const CardEditor = ({
   const oxfordListWord = useMemo(() => {
     const text = getHightlightedText(debouncedFront);
 
-    return debouncedFront && oxfordList.filter((word) => word.w === text);
+    return text && oxfordList.filter((word) => word.w === text);
   }, [debouncedFront]);
 
-  const ccaeListWord = useMemo(
-    () =>
-      debouncedFront &&
-      ccaeListWithRank.filter((word) => word.word === debouncedFront),
-    [debouncedFront],
-  );
+  const ccaeListWord = useMemo(() => {
+    const text = getHightlightedText(debouncedFront);
+
+    return text && ccaeListWithRank.filter((word) => word.word === text);
+  }, [debouncedFront]);
 
   const frontIsDuplicated = useMemo(() => {
     if (!debouncedFront) return [];

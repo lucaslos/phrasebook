@@ -8,6 +8,7 @@
     "dev": "vite",
     "serve": "vite preview",
     "build": "tsc -p tsconfig.prod.json & vite build",
+    "surge": "surge dist --domain ls-phrasebook.surge.sh",
     "ts-test": "tsc -p tsconfig.prod.json",
     "ts-watch": "tsc -w -p tsconfig.prod.json"
   },
