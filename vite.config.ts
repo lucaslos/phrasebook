@@ -7,9 +7,6 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@src', replacement: '/src' }],
   },
-  build: {
-    outDir: 'docs',
-  },
   esbuild: {
     jsxFactory: 'jsx',
     jsxInject: `import {jsx} from '@emotion/react'`,
