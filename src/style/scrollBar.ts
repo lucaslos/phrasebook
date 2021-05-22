@@ -1,7 +1,7 @@
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { tint, lighten } from 'polished';
-import { colorSecondary } from 'style/theme';
-import rgba from 'utils/rgba';
+import { colorSecondary } from '@src/style/theme';
+import rgba from '@src/utils/rgba';
 
 const background = lighten(0.16, colorSecondary);
 const thumb = colorSecondary;

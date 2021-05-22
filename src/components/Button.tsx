@@ -1,10 +1,10 @@
-import css from '@emotion/css';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Icon, { Icons } from 'components/Icon';
+import Icon, { Icons } from '@src/components/Icon';
 import React, { FunctionComponent } from 'react';
-import { letterSpacing } from 'style/helpers';
-import { centerContent, fillContainer } from 'style/modifiers';
-import { colorPrimary, colorGradient } from 'style/theme';
+import { letterSpacing } from '@src/style/helpers';
+import { centerContent, fillContainer } from '@src/style/modifiers';
+import { colorPrimary, colorGradient } from '@src/style/theme';
 
 type Props = {
   label?: string;
@@ -27,8 +27,8 @@ const Container = styled.a<{ as?: string; disabled?: boolean }>`
   margin: 4px;
   display: inline-flex;
   font-weight: 400;
-  cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
-  opacity: ${p => (p.disabled ? 0.5 : 1)};
+  cursor: ${(p) => (p.disabled ? 'auto' : 'pointer')};
+  opacity: ${(p) => (p.disabled ? 0.5 : 1)};
   transition: 240ms;
   text-transform: uppercase;
   font-size: 14px;
@@ -44,7 +44,7 @@ const Container = styled.a<{ as?: string; disabled?: boolean }>`
   }
 
   &:hover::before {
-    opacity: ${p => (p.disabled ? 0.85 : 1)};
+    opacity: ${(p) => (p.disabled ? 0.85 : 1)};
   }
 `;
 
@@ -81,6 +81,9 @@ const Button = ({
     href={href}
     onClick={onClick}
     disabled={disabled}
+    onMouseDown={(e) => {
+      e.preventDefault();
+    }}
     css={small && smallStyle}
     target={!href || noNewTab ? undefined : '_blank'}
   >

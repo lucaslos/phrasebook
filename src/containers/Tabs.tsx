@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { centerContent } from 'style/modifiers';
-import { colorGradient, fontDecorative, colorSecondary, colorPrimary, colorBg } from 'style/theme';
-import appState from 'state/appState';
-import rgba from 'utils/rgba';
+import { centerContent } from '@src/style/modifiers';
+import { colorGradient, fontDecorative, colorSecondary, colorPrimary, colorBg } from '@src/style/theme';
+import appState from '@src/state/appState';
+import rgba from '@src/utils/rgba';
 
 const ContainerWrapper = styled.div`
   ${centerContent};

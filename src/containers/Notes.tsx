@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import SectionHeader from 'components/SectionHeader';
-import ReactTags from 'lib/react-tags/ReactTags';
+import SectionHeader from '@src/components/SectionHeader';
+import ReactTags from '@src/lib/react-tags/ReactTags';
 import React from 'react';
-import { centerContent } from 'style/modifiers';
-import { colorPrimary, colorRed, colorSecondary } from 'style/theme';
+import { centerContent } from '@src/style/modifiers';
+import { colorPrimary, colorRed, colorSecondary } from '@src/style/theme';
 
 type Props = {
   tags: string[];

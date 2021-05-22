@@ -1,4 +1,4 @@
-import { JsonIcon } from 'components/Icon';
+import { JsonIcon } from '@src/components/Icon';
 
 const iconSet = {
   moreVert: {
@@ -17,7 +17,7 @@ const iconSet = {
   },
 };
 
-if (__DEV__) {
+if (import.meta.env.DEV) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const testIconTypes: {
     [k: string]: JsonIcon;

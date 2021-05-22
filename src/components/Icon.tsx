@@ -1,7 +1,7 @@
-import iconsSet from 'data/icons.ts';
+import iconsSet from '@src/data/icons';
 import * as React from 'react';
-import { colorPrimary } from 'style/theme';
-import { obj } from 'typings/utils';
+import { colorPrimary } from '@src/style/theme';
+import { obj } from '@src/typings/utils';
 
 export type JsonIcon = {
   viewBox?: string;
@@ -18,7 +18,7 @@ type Icon = {
 };
 
 const Icon = ({ name, color = colorPrimary, size = 24 }: Icon) => {
-  if (__DEV__ && !iconsSet[name]) throw new Error(`Icon ${name} do not exists`);
+  if (import.meta.env.DEV && !iconsSet[name]) throw new Error(`Icon ${name} do not exists`);
 
   const { viewBox, paths }: JsonIcon = iconsSet[name];
 

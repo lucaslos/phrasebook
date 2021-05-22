@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import ReactTags from 'lib/react-tags/ReactTags';
+import ReactTags from '@src/lib/react-tags/ReactTags';
 import {
   colorPrimary,
   colorSecondary,
@@ -8,14 +8,14 @@ import {
   fontDecorative,
   colorBg,
   colorGradient,
-} from 'style/theme';
-import { mqMobile } from 'style/mediaQueries';
-import { circle } from 'style/helpers';
-import { centerContent, centerContentCollum } from 'style/modifiers';
-import rgba from 'utils/rgba';
-import SectionHeader from 'components/SectionHeader';
-import { sortByFrequencyAndRemoveDuplicates } from 'utils/sortByFrequencyAndRemoveDuplicates';
-import cardsState from 'state/cardsState';
+} from '@src/style/theme';
+import { mqMobile } from '@src/style/mediaQueries';
+import { circle } from '@src/style/helpers';
+import { centerContent, centerContentCollum } from '@src/style/modifiers';
+import rgba from '@src/utils/rgba';
+import SectionHeader from '@src/components/SectionHeader';
+import { sortByFrequencyAndRemoveDuplicates } from '@src/utils/sortByFrequencyAndRemoveDuplicates';
+import cardsState from '@src/state/cardsState';
 
 type Props = {
   tags: string[];

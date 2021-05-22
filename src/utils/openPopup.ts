@@ -26,7 +26,7 @@ export function openPopup(url: string) {
   );
 
   // Puts focus on the newWindow
-  if (window.focus && newWindow) {
+  if (newWindow) {
     newWindow.focus();
   }
 

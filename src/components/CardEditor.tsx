@@ -1,20 +1,20 @@
-import css from '@emotion/css';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Button from 'components/Button';
-import SectionHeader from 'components/SectionHeader';
-import TextField from 'components/TextField';
-import Notes from 'containers/Notes';
-import Tags from 'containers/Tags';
-import ccaeList from 'data/CCAE.json';
-import oxfordList from 'data/oxford3000-5000.json';
+import Button from '@src/components/Button';
+import SectionHeader from '@src/components/SectionHeader';
+import TextField from '@src/components/TextField';
+import Notes from '@src/containers/Notes';
+import Tags from '@src/containers/Tags';
+import ccaeList from '@src/data/CCAE.json';
+import oxfordList from '@src/data/oxford3000-5000.json';
 import { isEqual } from 'lodash-es';
-import React, { useMemo, useState } from 'react';
-import cardsState, { Card, CardOptionalId } from 'state/cardsState';
-import { centerContent } from 'style/modifiers';
-import { colorPrimary, colorSecondary } from 'style/theme';
-import useDebounce from 'utils/hooks/useDebounce';
-import { openPopup } from 'utils/openPopup';
-import rgba from 'utils/rgba';
+import React, { useMemo, useRef, useState } from 'react';
+import cardsState, { Card, CardOptionalId } from '@src/state/cardsState';
+import { centerContent } from '@src/style/modifiers';
+import { colorPrimary, colorSecondary } from '@src/style/theme';
+import useDebounce from '@src/utils/hooks/useDebounce';
+import { openPopup } from '@src/utils/openPopup';
+import rgba from '@src/utils/rgba';
 import Fuse from 'fuse.js';
 
 type Props = {
@@ -76,6 +76,8 @@ const dictionaryUrls = {
 const Container = styled.div`
   width: 100%;
   max-width: 500px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const BottomButtons = styled.div`
@@ -228,14 +230,14 @@ const CardEditor = ({
 
   const oxfordListWord = useMemo(
     () =>
-      debouncedFront && oxfordList.filter(word => word.w === debouncedFront),
+      debouncedFront && oxfordList.filter((word) => word.w === debouncedFront),
     [debouncedFront],
   );
 
   const ccaeListWord = useMemo(
     () =>
       debouncedFront &&
-      ccaeListWithRank.filter(word => word.word === debouncedFront),
+      ccaeListWithRank.filter((word) => word.word === debouncedFront),
     [debouncedFront],
   );
 
@@ -249,7 +251,7 @@ const CardEditor = ({
     });
     return fuse
       .search(debouncedFront)
-      .filter(card => card.id !== initialProps.id);
+      .filter((card) => card.id !== initialProps.id);
   }, [debouncedFront]);
 
   const backIsDuplicated = useMemo(() => {
@@ -262,8 +264,36 @@ const CardEditor = ({
     });
     return fuse
       .search(debouncedBack)
-      .filter(card => card.id !== initialProps.id);
+      .filter((card) => card.id !== initialProps.id);
   }, [debouncedBack]);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  function highlightText() {
+    const input = inputRef.current;
+
+    console.log(input);
+
+    if (!input) return;
+
+    const { value, selectionStart, selectionEnd } = input;
+
+    if (selectionStart === null || selectionEnd === null) return;
+
+    const selectedText = value
+      .substring(selectionStart, selectionEnd)
+      .trimEnd();
+
+    const newValue = `${value.substring(
+      0,
+      selectionStart,
+    )}***${selectedText}***${value.substring(
+      selectionStart + selectedText.length,
+    )}`;
+
+    input.value = newValue;
+    handleChange(newValue, true, 'front');
+  }
 
   return (
     <Container>
@@ -274,9 +304,21 @@ const CardEditor = ({
         handleChange={handleChange}
         value={fields.front.value}
         required
+        inputRef={inputRef}
         disableLabelAnimation
         multiline
       />
+      <Button
+        label="Highlight text"
+        small
+        css={[
+          translateButtonsStyle,
+          { marginBottom: 20, marginTop: -8, alignSelf: 'flex-end' },
+        ]}
+        onClick={highlightText}
+        disabled={!fields.front.isValid}
+      />
+
       <TextField
         id="back"
         label="Back"
@@ -356,7 +398,10 @@ const CardEditor = ({
         `}
       >
         Suggestions:
-        {(oxfordListWord && oxfordListWord.length > 0 ? oxfordListWord : tagsSuggestions).map((word, i) => (
+        {(oxfordListWord && oxfordListWord.length > 0
+          ? oxfordListWord
+          : tagsSuggestions
+        ).map((word, i) => (
           <TagSuggestion key={i} onClick={() => addTag(word.p)}>
             {word.p}
           </TagSuggestion>
@@ -418,9 +463,9 @@ const CardEditor = ({
           label={saveButtonLabel}
           onClick={onClickSaveAction}
           disabled={
-            !fields.back.isValid
-            || !fields.front.isValid
-            || !validBeforeSave(newCardProps)
+            !fields.back.isValid ||
+            !fields.front.isValid ||
+            !validBeforeSave(newCardProps)
           }
         />
       </BottomButtons>

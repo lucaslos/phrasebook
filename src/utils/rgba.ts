@@ -1,5 +1,5 @@
-import { hexToRgb } from 'utils/hexToRgb';
-import { obj } from 'typings/utils';
+import { hexToRgb } from '@src/utils/hexToRgb';
+import { obj } from '@src/typings/utils';
 
 const rgbCache: obj<string> = {};
 

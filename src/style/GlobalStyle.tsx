@@ -1,12 +1,12 @@
-import { css, Global } from '@emotion/core';
+import { css, Global } from '@emotion/react';
 import hotkey from 'hotkeys-js';
 import React, { useEffect } from 'react';
-import { fillContainer } from 'style/modifiers';
-import normalize from 'style/normalize';
-import { fontPrimary } from 'style/theme';
-import useGetSet from 'utils/hooks/useGetSet';
-import { appContainerStyle } from 'containers/App';
-import scrollBar from 'style/scrollBar';
+import { fillContainer } from '@src/style/modifiers';
+import normalize from '@src/style/normalize';
+import { fontPrimary } from '@src/style/theme';
+import useGetSet from '@src/utils/hooks/useGetSet';
+import { appContainerStyle } from '@src/containers/App';
+import scrollBar from '@src/style/scrollBar';
 
 const debugLayoutStyle = css`
   *:not(g):not(path) {
@@ -67,7 +67,7 @@ const GlobalStyle = () => {
 
   useEffect(() => {
     // OPTIMIZE: refactor this
-    if (__DEV__) {
+    if (import.meta.env.DEV) {
       hotkey('shift+d', () => {
         setDebugLayout(!getDebugLayout());
       });

@@ -1,15 +1,15 @@
-import css from '@emotion/css';
-import Button from 'components/Button';
-import Modal from 'containers/Modal';
+import { css } from '@emotion/react';
+import Button from '@src/components/Button';
+import Modal from '@src/containers/Modal';
 import React, { useState } from 'react';
-import { centerContentCollum } from 'style/modifiers';
-import { useShortCut } from 'utils/hooks/useHotKey';
+import { centerContentCollum } from '@src/style/modifiers';
+import { useShortCut } from '@src/utils/hooks/useHotKey';
 import {
   importCards,
   undoDelete,
   undoLastExport,
   undoLastImport,
-} from 'state/cardsState';
+} from '@src/state/cardsState';
 
 const DevMenu = () => {
   const [show, setShow] = useState(false);

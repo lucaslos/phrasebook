@@ -1,5 +1,5 @@
-import rgba from 'utils/rgba';
-import css from '@emotion/css';
+import rgba from '@src/utils/rgba';
+import { css } from '@emotion/react';
 
 /* colors hex */
 export const colorPrimary = '#E75590';

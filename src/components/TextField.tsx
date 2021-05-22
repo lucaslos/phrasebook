@@ -7,16 +7,16 @@ import React, {
 } from 'react';
 import styled from '@emotion/styled';
 import { ellipsis } from 'polished';
-import css from '@emotion/css';
+import { css } from '@emotion/react';
 import {
   fontSecondary,
   colorBg,
   colorPrimary,
   colorSecondary,
   colorRed,
-} from 'style/theme';
+} from '@src/style/theme';
 import AutoGrow from 'textarea-autogrow';
-import { show, hide } from 'style/modifiers';
+import { show, hide } from '@src/style/modifiers';
 import { debounce } from 'lodash-es';
 
 export type HandleChange = (
@@ -36,6 +36,7 @@ type Props = {
     errorMsg: string;
     validator?: (value: string) => boolean;
   }[];
+  inputRef?: { current: any };
   id?: string;
   width?: string;
   multiline?: boolean;
@@ -89,7 +90,7 @@ const Label = styled.label<{ notEmpty: boolean }>`
   ${ellipsis()};
   pointer-events: none;
 
-  ${p => p.notEmpty && labelOnTop};
+  ${(p) => p.notEmpty && labelOnTop};
 
   input:focus + & {
     ${labelOnTop};
@@ -155,6 +156,7 @@ const TextField: FunctionComponent<Props> = ({
   maxlength,
   multiline,
   hideErrors,
+  inputRef,
   disableLabelAnimation,
   forceRequiredErrorMsg,
   background = colorBg,
@@ -171,6 +173,7 @@ const TextField: FunctionComponent<Props> = ({
   const [displayError, setDisplayError] = useState<string[]>([]);
   const inputId = useRef(`${Date.now() + Math.random()}`);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const ref = inputRef || textareaRef;
 
   // const debouncedHandleChange = debounce<HandleChange>((...args) => {
   //   handleChange(...args);
@@ -192,14 +195,14 @@ const TextField: FunctionComponent<Props> = ({
       errorMsg = [minErrorMsg];
     } else if (validations) {
       errorMsg = validations
-        .filter(item => {
+        .filter((item) => {
           const matched = item.regex
             ? item.regex.test(`${inputValue}`)
             : item.validator && item.validator(`${inputValue}`);
 
           return item.showErrorIfMatch ? matched : !matched;
         })
-        .map(elem => elem.errorMsg);
+        .map((elem) => elem.errorMsg);
 
       fieldIsValid = errorMsg.length === 0;
     }
@@ -224,7 +227,7 @@ const TextField: FunctionComponent<Props> = ({
   useEffect(() => {
     if (multiline) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const growingTextarea = new AutoGrow(textareaRef.current, 5);
+      const growingTextarea = new AutoGrow(ref.current, 5);
     }
   }, []);
 
@@ -240,6 +243,7 @@ const TextField: FunctionComponent<Props> = ({
     max,
     min,
     step,
+    ref,
     id: inputId.current,
     value,
     autoComplete: autocomplete,
@@ -253,9 +257,9 @@ const TextField: FunctionComponent<Props> = ({
     <Container css={{ width }} className={className}>
       <div css={{ position: 'relative', zIndex: 5 }}>
         {!multiline ? (
-          <input css={inputStyle} {...inputProps} />
+          <input css={inputStyle} {...inputProps} ref={inputRef} />
         ) : (
-          <TextArea {...inputProps} ref={textareaRef} />
+          <TextArea {...inputProps} ref={ref} />
         )}
         {label && !usePlaceholder && (
           <Label
@@ -272,7 +276,7 @@ const TextField: FunctionComponent<Props> = ({
       >
         {errors
           ? errors.map((error, i) => [
-            <span key={i}>{error}</span>,
+              <span key={i}>{error}</span>,
               i < errors.length ? <br key={`br-${i}`} /> : undefined,
             ])
           : undefined}

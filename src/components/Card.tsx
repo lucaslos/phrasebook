@@ -1,13 +1,13 @@
-import css from '@emotion/css';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Button from 'components/Button';
+import Button from '@src/components/Button';
 import { ellipsis } from 'polished';
 import React, { useRef, useState } from 'react';
-import { Card as CardProps, deleteCard, updateCard } from 'state/cardsState';
-import { hide, show } from 'style/modifiers';
-import { colorPrimary, colorSecondary } from 'style/theme';
-import useOnClickOutside from 'utils/hooks/useOnClickOutside';
-import rgba from 'utils/rgba';
+import { Card as CardProps, deleteCard, updateCard } from '@src/state/cardsState';
+import { hide, show } from '@src/style/modifiers';
+import { colorPrimary, colorSecondary } from '@src/style/theme';
+import useOnClickOutside from '@src/utils/hooks/useOnClickOutside';
+import rgba from '@src/utils/rgba';
 
 type Props = {
   card: CardProps;

@@ -1,12 +1,14 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "esnext",
-    "module": "es6",       // specify module code generation
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["vite/client"],
+    "module": "ESNext", // specify module code generation
     "moduleResolution": "node",
-    "jsx": "react",             // use typescript to transpile jsx to js
-    "allowJs": true,            // allow a partial TypeScript and JavaScript codebase
-    "strictNullChecks": true,   // enable strict null checks as a best practice
+    "jsx": "react", // use typescript to transpile jsx to js
+    "allowJs": true, // allow a partial TypeScript and JavaScript codebase
+    "strictNullChecks": true, // enable strict null checks as a best practice
     "noImplicitReturns": true,
     "noImplicitAny": true,
     // "noUnusedLocals": true,
@@ -18,11 +20,8 @@
 
     "baseUrl": ".", // This must be specified if "paths" is set
     "paths": {
-      "*": [
-        "src/*",
-        "*",
-      ]
-    },
+      "@src/*": ["src/*"]
+    }
   },
   // "files": [
   //   "src/index.tsx",
@@ -30,11 +29,5 @@
   // "include": [
   //   "src/typings/**.ts"
   // ],
-  "exclude": [
-    "docs",
-    "dist",
-    "resources",
-    "node_modules",
-    "**/node_modules/*",
-  ]
+  "exclude": ["docs", "dist", "resources", "node_modules", "**/node_modules/*"]
 }

@@ -1,1 +1,1 @@
-import 'state/cardsState';
+import '@src/state/cardsState';

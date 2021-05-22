@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { hot } from 'react-hot-loader/root';
 
-import App from 'containers/App';
-import GlobalStyle from 'style/GlobalStyle';
+import App from '@src/containers/App';
+import GlobalStyle from '@src/style/GlobalStyle';
 
 const Root = () => (
   <React.StrictMode>
@@ -11,4 +10,4 @@ const Root = () => (
   </React.StrictMode>
 );
 
-export default hot(Root);
+export default Root;

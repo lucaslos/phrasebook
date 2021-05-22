@@ -1,17 +1,17 @@
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import React, { useEffect } from 'react';
-import AddCard from 'containers/AddCard';
+import AddCard from '@src/containers/AddCard';
 import styled from '@emotion/styled';
 import {
   centerContent,
   fillContainer,
-} from 'style/modifiers';
-import { colorBg } from 'style/theme';
-import Tabs from 'containers/Tabs';
-import List from 'containers/List';
-import appState from 'state/appState';
-import { loadCardsToState } from 'state/cardsState';
-import DevMenu from 'containers/DevMenu';
+} from '@src/style/modifiers';
+import { colorBg } from '@src/style/theme';
+import Tabs from '@src/containers/Tabs';
+import List from '@src/containers/List';
+import appState from '@src/state/appState';
+import { loadCardsToState } from '@src/state/cardsState';
+import DevMenu from '@src/containers/DevMenu';
 
 export const appContainerStyle = css`
   ${fillContainer};

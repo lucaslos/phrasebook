@@ -1,6 +1,6 @@
 import { createStore } from 'hookstated';
 import { openDB, DBSchema } from 'idb';
-import { sortByFrequencyAndRemoveDuplicates } from 'utils/sortByFrequencyAndRemoveDuplicates';
+import { sortByFrequencyAndRemoveDuplicates } from '@src/utils/sortByFrequencyAndRemoveDuplicates';
 
 export type Card = {
   id: number;

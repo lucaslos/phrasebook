@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import CardEditor from 'components/CardEditor';
+import CardEditor from '@src/components/CardEditor';
 import React, { useState } from 'react';
-import { addCard, CardOptionalId } from 'state/cardsState';
-import { centerContent } from 'style/modifiers';
+import { addCard, CardOptionalId } from '@src/state/cardsState';
+import { centerContent } from '@src/style/modifiers';
 
 const ContainerWrapper = styled.section`
   ${centerContent};

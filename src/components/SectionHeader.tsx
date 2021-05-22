@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled from '@emotion/styled';
-import { colorSecondary, fontDecorative } from 'style/theme';
-import { letterSpacing } from 'style/helpers';
-import { centerContent } from 'style/modifiers';
+import { colorSecondary, fontDecorative } from '@src/style/theme';
+import { letterSpacing } from '@src/style/helpers';
+import { centerContent } from '@src/style/modifiers';
 
 type Props = {
   name: string;

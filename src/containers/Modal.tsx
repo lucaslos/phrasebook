@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
-import { show as showStyleModifier, centerContent, hide, fillContainer } from 'style/modifiers';
-import css from '@emotion/css';
-import { colorBg, textGradient, colorSecondary } from 'style/theme';
-import rgba from 'utils/rgba';
-import Button from 'components/Button';
-import { rectSize } from 'style/helpers';
+import { show as showStyleModifier, centerContent, hide, fillContainer } from '@src/style/modifiers';
+import { css } from '@emotion/react';
+import { colorBg, textGradient, colorSecondary } from '@src/style/theme';
+import rgba from '@src/utils/rgba';
+import Button from '@src/components/Button';
+import { rectSize } from '@src/style/helpers';
 
 type Props = {
   show: boolean;

@@ -1,17 +1,17 @@
-import css from '@emotion/css';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Button from 'components/Button';
-import Card from 'components/Card';
-import CardEditor from 'components/CardEditor';
-import TextField from 'components/TextField';
-import Modal from 'containers/Modal';
+import Button from '@src/components/Button';
+import Card from '@src/components/Card';
+import CardEditor from '@src/components/CardEditor';
+import TextField from '@src/components/TextField';
+import Modal from '@src/containers/Modal';
 import { isEqual } from 'lodash-es';
 import React, { useMemo, useState } from 'react';
-import cardsState, { Card as CardType, exportCardsToSRS, updateCard } from 'state/cardsState';
-import { centerContent } from 'style/modifiers';
-import { colorPrimary, colorSecondary } from 'style/theme';
-import useDebounce from 'utils/hooks/useDebounce';
-import rgba from 'utils/rgba';
+import cardsState, { Card as CardType, exportCardsToSRS, updateCard } from '@src/state/cardsState';
+import { centerContent } from '@src/style/modifiers';
+import { colorPrimary, colorSecondary } from '@src/style/theme';
+import useDebounce from '@src/utils/hooks/useDebounce';
+import rgba from '@src/utils/rgba';
 
 const ContainerWrapper = styled.section`
   ${centerContent};
