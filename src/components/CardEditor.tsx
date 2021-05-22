@@ -174,6 +174,18 @@ const SimilarCardsWrapper = styled.div`
   }
 `;
 
+function getHightlightedText(value: string) {
+  if (!value) return '';
+
+  const start = value.indexOf('***');
+  const end = value.indexOf('***', start + 3);
+  if (end === -1) return value;
+
+  const hightLighted = value.substring(start + 3, end);
+
+  return hightLighted;
+}
+
 const CardEditor = ({
   initialCardProps = {},
   onSave: saveAction,
@@ -225,14 +237,14 @@ const CardEditor = ({
     setTags([...tags, tag]);
   }
 
-  const debouncedFront = useDebounce(fields.front.value.trim(), 1000);
-  const debouncedBack = useDebounce(fields.back.value.trim(), 1000);
+  const debouncedFront = useDebounce(fields.front.value.trim(), 700);
+  const debouncedBack = useDebounce(fields.back.value.trim(), 700);
 
-  const oxfordListWord = useMemo(
-    () =>
-      debouncedFront && oxfordList.filter((word) => word.w === debouncedFront),
-    [debouncedFront],
-  );
+  const oxfordListWord = useMemo(() => {
+    const text = getHightlightedText(debouncedFront);
+
+    return debouncedFront && oxfordList.filter((word) => word.w === text);
+  }, [debouncedFront]);
 
   const ccaeListWord = useMemo(
     () =>
@@ -247,10 +259,11 @@ const CardEditor = ({
     const fuse = new Fuse(cardsState.getState().cards, {
       keys: ['front'],
       threshold: 0.1,
+      getFn: (v) => getHightlightedText(v.front),
       shouldSort: true,
     });
     return fuse
-      .search(debouncedFront)
+      .search(getHightlightedText(debouncedFront))
       .filter((card) => card.id !== initialProps.id);
   }, [debouncedFront]);
 
@@ -361,7 +374,11 @@ const CardEditor = ({
           small
           css={translateButtonsStyle}
           onClick={() =>
-            openPopup(dictionaryUrls.cambridgeTranslation(fields.front.value))
+            openPopup(
+              dictionaryUrls.cambridgeTranslation(
+                getHightlightedText(fields.front.value),
+              ),
+            )
           }
           disabled={!fields.front.isValid}
         />
@@ -370,7 +387,11 @@ const CardEditor = ({
           small
           css={translateButtonsStyle}
           onClick={() =>
-            openPopup(dictionaryUrls.contextReverso(fields.front.value))
+            openPopup(
+              dictionaryUrls.contextReverso(
+                getHightlightedText(fields.front.value),
+              ),
+            )
           }
           disabled={!fields.front.isValid}
         />
@@ -379,7 +400,11 @@ const CardEditor = ({
           small
           css={translateButtonsStyle}
           onClick={() =>
-            openPopup(dictionaryUrls.googleTranslate(fields.front.value))
+            openPopup(
+              dictionaryUrls.googleTranslate(
+                getHightlightedText(fields.front.value),
+              ),
+            )
           }
           disabled={!fields.front.isValid}
         />
