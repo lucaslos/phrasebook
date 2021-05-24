@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 import { show as showStyleModifier, centerContent, hide, fillContainer } from '@src/style/modifiers';
 import { css } from '@emotion/react';
-import { colorBg, textGradient, colorSecondary } from '@src/style/theme';
+import { colorBg, textGradient, colorSecondary, colorBgSecondary, colorPrimary } from '@src/style/theme';
 import rgba from '@src/utils/rgba';
 import Button from '@src/components/Button';
 import { rectSize } from '@src/style/helpers';
@@ -37,14 +37,16 @@ const ModalCard = styled.div`
   overflow-y: auto;
   padding: 16px;
   border-radius: 12px;
-  background: #fff;
+  border: 1px solid ${rgba(colorSecondary, 0.5)};
+  background: #111827;
+  box-shadow: 0 4px 20px ${rgba(colorSecondary, 0.2)};
 `;
 
 const Bg = styled.div`
   ${fillContainer};
 
   background: ${rgba(colorBg, 0.2)};
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
 `;
 
 const ModalTitle = styled.h1`

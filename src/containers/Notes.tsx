@@ -3,7 +3,7 @@ import SectionHeader from '@src/components/SectionHeader';
 import ReactTags from '@src/lib/react-tags/ReactTags';
 import React from 'react';
 import { centerContent } from '@src/style/modifiers';
-import { colorPrimary, colorRed, colorSecondary } from '@src/style/theme';
+import { colorBgSecondary, colorPrimary, colorRed, colorSecondary } from '@src/style/theme';
 
 type Props = {
   tags: string[];
@@ -46,16 +46,17 @@ const Container = styled.div`
     border: 0;
     text-align: center;
     outline: 0;
+    color: #fff;
 
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
-    background: #fff;
+    background: ${colorBgSecondary};
   }
 
   .react-tags__delete-button {
     position: absolute;
     right: 12px;
-    color: #aaa;
+    color: #fff;
     margin-left: 8px;
 
     &:hover {

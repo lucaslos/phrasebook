@@ -110,7 +110,7 @@ const inputStyle = css`
   padding-bottom: 8px;
   padding-left: 12px;
 
-  color: #333;
+  color: #fff;
   font-size: 16px;
   letter-spacing: 0.0125em;
   background: transparent;

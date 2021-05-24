@@ -11,7 +11,7 @@ import { isEqual } from 'lodash-es';
 import React, { useMemo, useRef, useState } from 'react';
 import cardsState, { Card, CardOptionalId } from '@src/state/cardsState';
 import { centerContent } from '@src/style/modifiers';
-import { colorPrimary, colorSecondary } from '@src/style/theme';
+import { colorBgSecondary, colorPrimary, colorSecondary } from '@src/style/theme';
 import useDebounce from '@src/utils/hooks/useDebounce';
 import { openPopup } from '@src/utils/openPopup';
 import rgba from '@src/utils/rgba';
@@ -108,7 +108,7 @@ const initialFields = (front: string = '', back: string = '') => ({
   back: {
     value: back,
     isValid: !!back.trim(),
-    required: true,
+    required: false,
     forceRequired: false,
   },
 });
@@ -142,12 +142,12 @@ const TagSuggestion = styled.button`
 
 const SimilarCardsWrapper = styled.div`
   width: 100%;
-  background: #fff;
+  background: ${colorBgSecondary};
   margin-top: 4px;
   font-size: 14px;
   border-radius: 12px;
   margin-bottom: 8px;
-  color: #555;
+  color: #ddd;
   padding: 4px 16px;
 
   > div {
@@ -156,7 +156,7 @@ const SimilarCardsWrapper = styled.div`
 
     > span {
       span {
-        color: #000;
+        color: #fff;
         font-weight: 600;
         white-space: nowrap;
       }
@@ -337,7 +337,6 @@ const CardEditor = ({
         background={background}
         handleChange={handleChange}
         value={fields.back.value}
-        required
         disableLabelAnimation
         multiline
       />
@@ -416,7 +415,7 @@ const CardEditor = ({
       <Tags tags={tags} setTags={setTags} />
       <Row
         css={css`
-          color: #555;
+          color: #fff;
           font-size: 14px;
           justify-content: flex-start;
         `}
@@ -486,11 +485,7 @@ const CardEditor = ({
         <Button
           label={saveButtonLabel}
           onClick={onClickSaveAction}
-          disabled={
-            !fields.back.isValid ||
-            !fields.front.isValid ||
-            !validBeforeSave(newCardProps)
-          }
+          disabled={!fields.front.isValid || !validBeforeSave(newCardProps)}
         />
       </BottomButtons>
     </Container>

@@ -216,7 +216,7 @@ const List = () => {
           initialCardProps={editCard}
           onSave={saveCard}
           validBeforeSave={validBeforeSave}
-          background="#fff"
+          background="#111827"
           saveButtonLabel="Save Card"
         />
       </Modal>

@@ -45,7 +45,7 @@ const cardsState = createStore<CardsState, Reducers>('cards', {
     }),
     updateCard: (state, cardsToUpdate) => ({
       ...state,
-      cards: state.cards.map(card => {
+      cards: state.cards.map((card) => {
         const updatedCard = cardsToUpdate.find(({ id }) => id === card.id);
 
         return updatedCard ? { ...card, ...updatedCard } : card;
@@ -53,7 +53,7 @@ const cardsState = createStore<CardsState, Reducers>('cards', {
     }),
     deleteCard: (state, { id }) => ({
       ...state,
-      cards: state.cards.filter(card => id !== card.id),
+      cards: state.cards.filter((card) => id !== card.id),
     }),
   },
 });
@@ -68,13 +68,13 @@ const cardsStateDb = openDB<MyDB>('cards', 1, {
 });
 
 export function loadCardsToState() {
-  cardsStateDb.then(db => {
+  cardsStateDb.then((db) => {
     db.getAll('cards').then((cards: Card[]) => {
       cardsState.setKey('cards', cards);
 
       let suggestions: string[] = [];
 
-      cards.forEach(card => {
+      cards.forEach((card) => {
         if (card.tags && card.tags.length !== 0) {
           suggestions = suggestions.concat(card.tags);
         }
@@ -92,27 +92,27 @@ export function addCard(
   newCards: Omit<Card, 'id'>[],
   callback?: (ids: number[]) => void,
 ) {
-  cardsStateDb.then(db => {
+  cardsStateDb.then((db) => {
     const tx = db.transaction('cards', 'readwrite');
 
-    const promises = newCards.map(card =>
+    const promises = newCards.map((card) =>
       tx.store.add({
         ...card,
       }),
     );
 
     tx.done.then(() => {
-      Promise.all(promises).then(ids => callback && callback(ids));
+      Promise.all(promises).then((ids) => callback && callback(ids));
       loadCardsToState();
     });
   });
 }
 
 export function updateCard(cards: Card[]) {
-  cardsStateDb.then(db => {
+  cardsStateDb.then((db) => {
     const tx = db.transaction('cards', 'readwrite');
 
-    cards.forEach(card => tx.store.put(card));
+    cards.forEach((card) => tx.store.put(card));
 
     tx.done.then(() => loadCardsToState());
   });
@@ -130,11 +130,11 @@ export function undoDelete() {
 export function deleteCard(ids: Card['id'][]) {
   lastDeletes = cardsState
     .getState()
-    .cards.filter(card => ids.includes(card.id));
-  cardsStateDb.then(db => {
+    .cards.filter((card) => ids.includes(card.id));
+  cardsStateDb.then((db) => {
     const tx = db.transaction('cards', 'readwrite');
 
-    ids.forEach(id => tx.store.delete(id));
+    ids.forEach((id) => tx.store.delete(id));
 
     tx.done.then(() => loadCardsToState());
   });
@@ -144,7 +144,7 @@ let lastExport: undefined | Card[];
 export function undoLastExport() {
   if (lastExport) {
     updateCard(
-      lastExport.map(card => ({
+      lastExport.map((card) => ({
         ...card,
         isArchieved: false,
       })),
@@ -180,12 +180,12 @@ export function undoLastImport() {
 export function importCards(toExport = false) {
   navigator.clipboard
     .readText()
-    .then(text => {
+    .then((text) => {
       const cards: SRSCard[] = JSON.parse(text);
 
       if (cards.length) {
         addCard(
-          cards.map(card => ({
+          cards.map((card) => ({
             front: card.front || '',
             back: card.back || '',
             tags: card.tags || [],
@@ -193,7 +193,7 @@ export function importCards(toExport = false) {
             isArchieved: !toExport,
             isTopWord: false,
           })),
-          ids => {
+          (ids) => {
             lastImport = ids;
           },
         );
@@ -201,7 +201,7 @@ export function importCards(toExport = false) {
         alert('invalid input');
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.error('Failed to read clipboard contents: ', err);
     });
 
@@ -211,14 +211,14 @@ export function importCards(toExport = false) {
 export async function exportCardsToSRS() {
   const cardsToExport = cardsState
     .getState()
-    .cards.filter(card => !card.isArchieved);
+    .cards.filter((card) => !card.isArchieved && Boolean(card.back));
 
   lastExport = cardsToExport;
 
   try {
     await navigator.clipboard.writeText(JSON.stringify(cardsToExport));
     updateCard(
-      cardsToExport.map(card => ({
+      cardsToExport.map((card) => ({
         ...card,
         isArchieved: true,
       })),

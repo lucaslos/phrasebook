@@ -5,7 +5,7 @@ import { ellipsis } from 'polished';
 import React, { useRef, useState } from 'react';
 import { Card as CardProps, deleteCard, updateCard } from '@src/state/cardsState';
 import { hide, show } from '@src/style/modifiers';
-import { colorPrimary, colorSecondary } from '@src/style/theme';
+import { colorBgSecondary, colorPrimary, colorSecondary } from '@src/style/theme';
 import useOnClickOutside from '@src/utils/hooks/useOnClickOutside';
 import rgba from '@src/utils/rgba';
 
@@ -18,7 +18,7 @@ const Container = styled.div`
   border-radius: 8px;
   text-align: center;
   font-size: 12px;
-  color: ${colorSecondary};
+  color: #fff;
   padding: 8px;
   max-width: 100%;
   padding-right: 32px;
@@ -27,7 +27,7 @@ const Container = styled.div`
 
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 
-  background: #fff;
+  background: ${colorBgSecondary};
 
   &:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);

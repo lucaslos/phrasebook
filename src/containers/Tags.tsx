@@ -75,7 +75,7 @@ const Container = styled.div`
     background: transparent;
     box-shadow: none;
     padding: 8px;
-    color: #000;
+    color: #fff;
 
     &:focus {
       border-color: ${colorSecondary};

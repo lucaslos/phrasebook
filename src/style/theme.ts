@@ -4,7 +4,8 @@ import { css } from '@emotion/react';
 /* colors hex */
 export const colorPrimary = '#E75590';
 export const colorSecondary = '#448CFD';
-export const colorBg = '#f8f8f8';
+export const colorBg = '#111827';
+export const colorBgSecondary = '#1F2937';
 export const colorRed = '#E53558';
 
 /* gradients */
